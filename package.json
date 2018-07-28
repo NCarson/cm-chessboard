@@ -1,7 +1,7 @@
 {
-  "name": "cm-chessboard",
-  "version": "2.13.3",
-  "description": "A lightweight, ES6 module based, responsive, SVG chessboard with almost no external dependencies.",
+  "name": "cm-chessboard-es5",
+  "version": "2.11.26",
+  "description": "port of cm-chessboard to es5.",
   "keywords": [
     "chess",
     "chessboard",
@@ -10,26 +10,21 @@
     "ECMAScript 6",
     "svjs"
   ],
-  "main": "src/cm-chessboard/Chessboard.js",
-  "scripts": {
-    "test": "tput setaf 4;echo 'Run test/index.html in your browser for unit testing.'; echo ''; exit 0",
-    "postinstall": "node postinstall.js"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shaack/cm-chessboard.git"
+    "url": "git+https://github.com/ncarson/cm-chessboard.git"
   },
-  "author": "Stefan Haack <shaack@gmail.com> (http://www.shaack.com)",
+  "author": "Nate Carson <wile.e.coyote.eug@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shaack/cm-chessboard/issues"
+    "url": "https://github.com/ncarson/cm-chessboard/issues"
   },
-  "homepage": "https://github.com/shaack/cm-chessboard#readme",
+  "homepage": "https://github.com/ncarson/cm-chessboard#readme",
   "dependencies": {
-    "browser-es-module-loader": "^0.4.1",
     "svjs-svg": "^1.1.9"
   },
   "devDependencies": {
-    "svjs-test": "^1.3.3"
+    "svjs-test": "^1.3.3",
+    "babel-preset-es2015": "^6.24.1"
   }
 }
