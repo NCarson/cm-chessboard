@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/index.js"],"names":[],"mappings":";;;;;;AACA;;kBAEe,sB","file":"index.js","sourcesContent":["\nimport { Chessboard } from './cm-chessboard/Chessboard.js'\n\nexport default Chessboard\n"]}

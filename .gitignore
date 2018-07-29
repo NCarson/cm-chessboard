@@ -3,6 +3,5 @@
 /src/**
 !/src/cm-chessboard
 !/src/cm-chessboard/**
-test.js
 test.js.es5
-lib
+bundle.js

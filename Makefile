@@ -44,19 +44,20 @@ COMP_FILES_GZ := $(patsubst %.svg,%.svg.gz,$(COMP_FILES))
 
 .PHONY: all clean clean_dist vendor_size
 # make the vendor and target bundles
-all: $(TARGETS) public/dist/test.js
+all: $(TARGETS) test.js.es5
 
 # remove the build lib and dist files
 clean:
 	rm $(LIB_DIR)/* -fr
 	rm $(TARGET) -f
+	rm test.js.es5 -f
 
 %.gz: %
 	$(GZIP) $< --stdout > $@
 
-public/dist/test.js:
+test.js.es5: bundle.js
 	$(BABEL) test.js --out-file test.js.es5
-	$(BROWSERIFY) --transform -d -o public/dist/test.js test.js.es5
+	$(BROWSERIFY) -d -o bundle.js test.js.es5
 
 .PRECIOUS: %.min.js #make will delete these as 'intermediate' without this
 %.min.js: %.js

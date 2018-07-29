@@ -13,9 +13,6 @@
             margin-bottom: 20px;
         }
     </style>
-    <!-- The following two lines makes it compatible to browsers without ES6 Modules -->
-    <script nomodule src="./node_modules/browser-es-module-loader/dist/babel-browser-build.js"></script>
-    <script nomodule src="./node_modules/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
 </head>
 <body>
 <h1>cm-chessboard</h1>
@@ -38,13 +35,7 @@
 <h2>Chessboard</h2>
 <pre>const board = new Chessboard(document.getElementById("board"), {position: "start"})</pre>
 <div class="board" id="board"></div>
-<script type="module">
-    import {Chessboard} from "./src/cm-chessboard/Chessboard.js"
-
-    const board = new Chessboard(document.getElementById("board"), {
-        position: "start"
-    });
-</script>
+<script src="bundle.js"></script>
 <h2>Test</h2>
 <ul>
     <li><a href="test/">Run the unit tests</a></li>

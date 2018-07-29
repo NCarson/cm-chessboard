@@ -1,0 +1,4 @@
+
+import { Chessboard } from './cm-chessboard/Chessboard.js'
+
+export default Chessboard
