@@ -4,8 +4,18 @@
  * License: MIT, see file 'LICENSE'
  */
 
-import {Svg} from "../svjs-svg/src/svjs-svg/Svg.js"
-import {MOVE_INPUT_MODE, MARKER_TYPE} from "./Chessboard.js"
+import {Svg} from "./Svg.js"
+// circular
+//import {MOVE_INPUT_MODE, MARKER_TYPE} from "./Chessboard.js"
+const MOVE_INPUT_MODE = {
+    viewOnly: 0,
+    dragPiece: 1,
+    dragMarker: 2
+}
+const MARKER_TYPE = {
+    move: {class: "move", slice: "marker1"},
+    emphasize: {class: "emphasize", slice: "marker2"}
+}
 
 const STATE = {
     waitForInputStart: 0,

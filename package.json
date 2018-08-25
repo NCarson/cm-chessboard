@@ -1,8 +1,13 @@
 {
   "name": "cm-chessboard-es5",
-  "version": "2.11.26",
+  "version": "2.11.26.04",
   "description": "port of cm-chessboard to es5.",
-  "main" : "./lib/cm-chessboard/Chessboard.js",
+  "main": "dist/cm-chessboard.cjs.js",
+  "module": "dist/cm-chessboard.esm.js",
+  "browser": "dist/cm-chessboard.umd.js",
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "chess",
     "chessboard",
@@ -26,6 +31,10 @@
   },
   "devDependencies": {
     "svjs-test": "^1.3.3",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1"
   }
 }

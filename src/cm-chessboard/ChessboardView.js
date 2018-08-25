@@ -4,16 +4,34 @@
  * License: MIT, see file 'LICENSE'
  */
 
-import {Svg} from "../svjs-svg/src/svjs-svg/Svg.js"
+import {Svg} from "./Svg.js"
 import {SQUARE_COORDINATES} from "./ChessboardState.js"
 import {ChessboardMoveInput} from "./ChessboardMoveInput.js"
-import {COLOR, MOVE_INPUT_MODE, INPUT_EVENT_TYPE} from "./Chessboard.js"
+//this a circular 
+//import {COLOR, MOVE_INPUT_MODE, INPUT_EVENT_TYPE} from "./Chessboard.js"
 import {ChessboardPiecesAnimation} from "./ChessboardPiecesAnimation.js"
 
 const SPRITE_LOADING_STATUS = {
     notLoaded: 1,
     loading: 2,
     loaded: 3
+}
+
+// kludge: redefined -- see above
+const COLOR = {
+    white: "w",
+    black: "b"
+}
+const MOVE_INPUT_MODE = {
+    viewOnly: 0,
+    dragPiece: 1,
+    dragMarker: 2
+}
+const INPUT_EVENT_TYPE = {
+    moveStart: "moveStart",
+    moveDone: "moveDone",
+    moveCanceled: "moveCanceled",
+    context: "context"
 }
 
 export class ChessboardView {

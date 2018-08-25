@@ -1,3 +1,3 @@
 
-import {Chessboard} from "./lib/cm-chessboard/Chessboard.js"
+import {Chessboard} from "./index.js"
 const board = new Chessboard(document.getElementById("board"), { position: "start" });

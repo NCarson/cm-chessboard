@@ -35,10 +35,14 @@
 <h2>Chessboard</h2>
 <pre>const board = new Chessboard(document.getElementById("board"), {position: "start"})</pre>
 <div class="board" id="board"></div>
-<script src="bundle.js"></script>
 <h2>Test</h2>
 <ul>
     <li><a href="test/">Run the unit tests</a></li>
 </ul>
+<div id='board' />
+<script>
+    require("./dist/cm-chessboard.umd")
+    var board = Chessboard(document.getElementById("board"), { position: "start" });
+</script>
 </body>
 </html>

@@ -3,74 +3,62 @@
 
 # good stuff on cdn browserify
 # https://shinglyu.github.io/web/2018/02/08/minimal-react-js-without-a-build-step-updated.html
+#
+.DELETE_ON_ERROR:
  
 # these should be installed globally
 BABEL := babel --presets=es2015
 BROWSERIFY := browserify
+BROWSERIFY_SHIM :=
 UGLIFYJS := uglifyjs
 NUNJUCKS := nunjucks
 GZIP := gzip
+LINTER := eslint --parser babel-eslint --plugin react --plugin import
 
-# directory strucrue
+# directory structure
 INDEX_DIR := public
-DIST_DIR := ./
+DIST_DIR := $(INDEX_DIR)/dist
 TEMPL_DIR := templates
 LIB_DIR := lib
 SRC_DIR := src
+DEP_FILE := $(LIB_DIR)/.deps
 
-TARGET_BUILD := $(DIST_DIR)/index.js
+SRC_FILES := $(shell find $(SRC_DIR)/ -name '*.js')
+LIB_FILES := $(patsubst $(SRC_DIR)/%,$(LIB_DIR)/%,$(SRC_FILES))
+MIN_FILES := $(patsubst $(LIB_DIR)/%.js,$(LIB_DIR)/%.min.js,$(LIB_FILES))
 
-# do not minify if were in dev
-ifeq ($(NODE_ENV),"development")
-	TARGET := $(TARGET_BUILD)
-else
-	TARGET := $(DIST_DIR)/index.min.js
-endif
+#libs that should not go in vendor build
+BROKEN_LIBS :=
 
-TARGETS := $(TARGET)
-TARGETS_GZ := $(TARGET).gz
+#CDN libs will be excluded from the vender build
+# but you have to set them up yourself
+CDN_LIBS :=
 
-#$(info $(TARGETS))
-#$(info $(TARGETS_GZ))
-#$(info $(TARGET_BUILD))
+TARGET := index.js
 
-# -L follows sysmlinks
-SRC_FILES := $(shell find -L $(SRC_DIR)/ -name '*.js')
-TRANSPILED_FILES := $(patsubst $(SRC_DIR)/%,lib/%,$(SRC_FILES))
-FLOW_FILES := $(patsubst %.js,%.js.flow,$(TRANSPILED_FILES))
-COMP_FILES := $(shell find $(INDEX_DIR)/ -name '*.svg')
-COMP_FILES_GZ := $(patsubst %.svg,%.svg.gz,$(COMP_FILES))
-
-
-.PHONY: all clean clean_dist vendor_size
-# make the vendor and target bundles
-all: $(TARGETS) test.js.es5
+.PHONY: all clean
+all: $(TARGET)
 
 # remove the build lib and dist files
 clean:
 	rm $(LIB_DIR)/* -fr
 	rm $(TARGET) -f
-	rm test.js.es5 -f
 
-%.gz: %
-	$(GZIP) $< --stdout > $@
+#%.gz: %
+#	$(GZIP) $< --stdout > $@
 
-test.js.es5: bundle.js
-	$(BABEL) test.js --out-file test.js.es5
-	$(BROWSERIFY) -d -o bundle.js test.js.es5
+$(TARGET): $(LIB_FILES)
+	#$(BROWSERIFY) $(LIB_FILES) --standalone Chessboard > $(TARGET)
+	#$(BROWSERIFY) -o $(TARGET) $(LIB_FILES)
+	rollup -c
 
 .PRECIOUS: %.min.js #make will delete these as 'intermediate' without this
-%.min.js: %.js
+%.min.js: $(LIB_FILES)
 	$(UGLIFYJS) -cmo $@ $<
-
-$(TARGET_BUILD): $(FLOW_FILES) $(TRANSPILED_FILES)
-	$(BROWSERIFY) --transform -d -o $(TARGET_BUILD) $(shell find $(LIB_DIR)/ -name '*.js')
-
-# #XXX this is not doing anything right now
-lib/%.js.flow: $(SRC_DIR)/%.js
-	mkdir -p $(dir $@)
 	cp $< $@
 
-lib/%: src/%
-	mkdir -p $(dir $@)
+$(LIB_DIR)/%: $(SRC_DIR)/%
+	$(LINTER) $<
+	mkdir $(dir $@) -p
 	$(BABEL) $< --out-file $@ --source-maps
+
